@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRobot } from '../context/RobotContext';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Contact = () => {
     message: ''
   });
   const [message, setMessage] = useState('');
+  const { reactToUserAction } = useRobot();
 
   const handleChange = (e) => {
     setFormData({
@@ -18,8 +20,14 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Robot reaction for form submission
+    reactToUserAction('form_submit', { text: 'Contact Form Submission' });
+    
     // In a real application, this would send the data to a backend API
     setMessage({ type: 'success', text: 'Thank you for your message! We will get back to you soon.' });
+    
+    // Clear form
     setFormData({
       name: '',
       email: '',
@@ -27,9 +35,22 @@ const Contact = () => {
       message: ''
     });
     
+    // Clear success message after 5 seconds
     setTimeout(() => {
       setMessage('');
     }, 5000);
+  };
+
+  // Handle WhatsApp click with robot reaction
+  const handleWhatsAppClick = () => {
+    reactToUserAction('click_button', { text: 'WhatsApp Chat' });
+    // WhatsApp will open in a new tab, robot will react when user returns
+  };
+
+  // Handle contact info clicks (email, phone, address)
+  const handleContactInfoClick = (type) => {
+    reactToUserAction('click_link', { text: `Contact ${type}` });
+    // You could add copy-to-clipboard functionality here
   };
 
   return (
@@ -42,7 +63,11 @@ const Contact = () => {
         
         <div className="contact-container">
           <div className="contact-info">
-            <div className="contact-item">
+            <div 
+              className="contact-item"
+              onClick={() => handleContactInfoClick('Email')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="contact-icon">
                 <i className="fas fa-envelope"></i>
               </div>
@@ -52,7 +77,11 @@ const Contact = () => {
               </div>
             </div>
             
-            <div className="contact-item">
+            <div 
+              className="contact-item"
+              onClick={() => handleContactInfoClick('Phone')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="contact-icon">
                 <i className="fas fa-phone"></i>
               </div>
@@ -69,14 +98,25 @@ const Contact = () => {
               <div>
                 <h4>WhatsApp</h4>
                 <p>+1 (234) 567-890</p>
-                <a href="https://wa.me/1234567890" className="btn btn-primary" style={{ padding: '8px 20px', marginTop: '10px', display: 'inline-block' }}>
+                <a 
+                  href="https://wa.me/1234567890" 
+                  className="btn btn-primary" 
+                  style={{ padding: '8px 20px', marginTop: '10px', display: 'inline-block' }}
+                  onClick={handleWhatsAppClick}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
                   <i className="fab fa-whatsapp" style={{ marginRight: '5px' }}></i>
                   Chat Now
                 </a>
               </div>
             </div>
             
-            <div className="contact-item">
+            <div 
+              className="contact-item"
+              onClick={() => handleContactInfoClick('Address')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="contact-icon">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
@@ -105,6 +145,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  onFocus={() => reactToUserAction('form_field', { text: 'Name field focus' })}
                 />
               </div>
               
@@ -118,6 +159,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  onFocus={() => reactToUserAction('form_field', { text: 'Email field focus' })}
                 />
               </div>
               
@@ -131,6 +173,7 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
+                  onFocus={() => reactToUserAction('form_field', { text: 'Subject field focus' })}
                 />
               </div>
               
@@ -144,10 +187,16 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  onFocus={() => reactToUserAction('form_field', { text: 'Message field focus' })}
                 ></textarea>
               </div>
               
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '15px' }}>
+              <button 
+                type="submit" 
+                className="btn btn-primary" 
+                style={{ width: '100%', padding: '15px' }}
+                onMouseEnter={() => reactToUserAction('button_hover', { text: 'Send Message button hover' })}
+              >
                 Send Message
               </button>
             </form>
@@ -159,4 +208,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

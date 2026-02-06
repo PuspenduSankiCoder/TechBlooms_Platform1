@@ -21,6 +21,16 @@ const Features = () => {
       icon: 'fas fa-network-wired',
       title: 'Career Network',
       description: 'Connect with researchers, industry professionals, and alumni worldwide'
+    },
+    {
+      icon: 'fas fa-network-wired',
+      title: 'Career Network',
+      description: 'Connect with researchers, industry professionals, and alumni worldwide'
+    },
+    {
+      icon: 'fas fa-network-wired',
+      title: 'Career Network',
+      description: 'Connect with researchers, industry professionals, and alumni worldwide'
     }
   ];
 

@@ -8,26 +8,26 @@ const Carousel = () => {
   const slides = [
     {
       image: require('../assets/DISASTER.png'), // Update with your actual image names
-      title: 'IoT in Disaster Management System',
-      description: 'An IoT-based system that monitors disaster conditions in real time and provides early warnings to reduce loss of life and property..',
+      title: 'Autonomous GPS-Guided Aerial Surveillance System for Disaster Response',
+      description: 'This project presents an autonomous aerial platform capable of navigating disaster-affected regions using GPS and onboard control algorithms.',
       buttonText: 'View Project Details'
     },
     {
       image: require('../assets/iot_hcmsys.png'),
-      title: 'IoT in Healthcare Management System',
-      description: 'A smart healthcare system that enables real-time patient monitoring and remote medical assistance using IoT.',
+      title: 'Cloud-Integrated Smart Health Monitoring and Emergency Response Framework',
+      description: 'This system continuously monitors vital physiological parameters such as heart rate, body temperature, and oxygen saturation, transmitting data securely to a cloud server.',
       buttonText: 'Explore Portal'
     },
     {
       image: require('../assets/SHELMET.png'),
-      title: 'IoT in Smart Helmet',
-      description: 'An IoT-enabled helmet that detects accidents, alcohol consumption, and improves rider safety.',
+      title: 'Embedded Vision-Based Driver Safety and Accident Prevention System',
+      description: 'This project implements an embedded vision system to monitor driver behavior and detect conditions such as drowsiness, distraction, and alcohol influence.',
       buttonText: 'View Project Details'
     },
     {
       image: require('../assets/SMART_AGRICULTURE_IOT.png'),
-      title: 'IoT in Smart Agriculture',
-      description: 'An intelligent agriculture system that uses IoT to monitor crops and optimize irrigation.',
+      title: 'Deep Learning–Based Crop Disease Detection and Yield Optimization System',
+      description: 'The proposed system uses convolutional neural networks (CNNs) to automatically detect crop diseases from leaf images captured in natural field conditions.',
       buttonText: 'View project details'
     },
       {

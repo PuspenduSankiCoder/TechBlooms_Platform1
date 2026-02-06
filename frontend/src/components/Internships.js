@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useRobot } from '../context/RobotContext';
 import axios from 'axios';
 
 const Internships = () => {
   const [activeTab, setActiveTab] = useState('2month');
   const { isAuthenticated } = useAuth();
+  const { reactToUserAction, guideToSection } = useRobot();
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+  // Robot interaction for tab changes
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    const tabName = tabId === '2month' ? '2-Month Intensive' : 
+                   tabId === '6month' ? '6-Month Research Track' : 'Custom Programs';
+    reactToUserAction('click_button', { text: `Internship Tab: ${tabName}` });
+  };
+
+  // Main apply function with robot interaction
   const handleApply = async (program) => {
+    // Robot reaction before authentication check
+    reactToUserAction('click_button', { text: `Apply: ${program}` });
+    
     if (!isAuthenticated) {
+      reactToUserAction('wrong_click', { text: 'User not authenticated' });
       navigate('/register');
       return;
     }
@@ -26,6 +41,9 @@ const Internships = () => {
         appliedFor: program,
       });
 
+      // Robot success reaction
+      reactToUserAction('form_submit', { text: `Application: ${program}` });
+      
       setMessage({ type: 'success', text: response.data.message || 'Application submitted successfully!' });
       
       setTimeout(() => {
@@ -33,12 +51,21 @@ const Internships = () => {
         navigate('/profile');
       }, 2000);
     } catch (error) {
+      // Robot error reaction
+      reactToUserAction('wrong_click', { text: `Application failed: ${program}` });
+      
       setMessage({
         type: 'error',
         text: error.response?.data?.message || 'Failed to submit application. Please try again.',
       });
       setLoading(false);
     }
+  };
+
+  // Handle contact navigation with robot guidance
+  const handleContactNavigation = () => {
+    reactToUserAction('click_button', { text: 'Contact for Custom Program' });
+    guideToSection('contact');
   };
 
   const tabs = [
@@ -119,7 +146,7 @@ const Internships = () => {
             <button
               key={tab.id}
               className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
             >
               {tab.label}
             </button>
@@ -170,24 +197,40 @@ const Internships = () => {
                   <button
                     className="btn btn-primary"
                     style={{ marginRight: '15px' }}
-                    onClick={() => {
-                      const contactSection = document.getElementById('contact');
-                      if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
+                    onClick={handleContactNavigation}
                   >
                     Contact for Custom Program
                   </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      reactToUserAction('click_button', { text: 'QR Code Request' });
+                      // Add QR code modal logic here if needed
+                    }}
+                  >
+                    Scan QR for Info
+                  </button>
                 </>
               ) : (
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleApply(activeTabData.title)}
-                  disabled={loading}
-                >
-                  {loading ? 'Submitting...' : 'Apply Now'}
-                </button>
+                <>
+                  <button
+                    className="btn btn-primary"
+                    style={{ marginRight: '15px' }}
+                    onClick={() => handleApply(activeTabData.title)}
+                    disabled={loading}
+                  >
+                    {loading ? 'Submitting...' : 'Apply Now'}
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      reactToUserAction('click_button', { text: 'QR Code Application' });
+                      // Add QR code modal logic here if needed
+                    }}
+                  >
+                    Scan QR to Apply
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -198,4 +241,3 @@ const Internships = () => {
 };
 
 export default Internships;
-

@@ -566,6 +566,96 @@ nav {
     color: var(--primary);
 }
 
+
+/* ========== ADVISERS SECTION STYLES ========== */
+
+.advisers-section {
+  padding: 80px 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.advisers-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.advisers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.adviser-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.adviser-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.adviser-name {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.adviser-title {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.adviser-qualifications {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.adviser-expertise {
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.adviser-expertise strong {
+  color: var(--primary-color);
+}
+
+/* Dark mode adjustments for advisers */
+.dark-mode .adviser-card {
+  background: var(--card-bg-dark);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .adviser-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive design for advisers */
+@media (max-width: 768px) {
+  .advisers-section {
+    padding: 60px 0;
+  }
+  
+  .advisers-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
 .contact-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

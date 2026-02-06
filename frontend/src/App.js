@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { RobotProvider } from './context/RobotContext';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Carousel from './components/Carousel';
-import Features from './components/Features';
-import Projects from './components/Projects';
-import Internships from './components/Internships';
-import Faculty from './components/Faculty';
-import Workshops from './components/Workshops';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
+import RobotAssistant from './components/RobotAssistant';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Advisers from "./components/Advisers"; // Keep this if you're using it elsewhere
 import Profile from './pages/Profile';
-import Home from './pages/Home';
+import Home from './pages/Home'; // This is your main page component
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import './App.css';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Check for saved theme or prefer-color-scheme
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     const savedTheme = localStorage.getItem('theme');
     
@@ -41,29 +36,34 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route 
-              path="/profile" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-          <Footer />
-        </div>
+        <RobotProvider>
+          <div className="App">
+            <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
+            <Header />
+            
+            {/* Add Robot Assistant */}
+            <RobotAssistant />
+            
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route 
+                path="/profile" 
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+            <Footer />
+          </div>
+        </RobotProvider>
       </Router>
     </AuthProvider>
   );
 }
 
 export default App;
-

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .transition-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .lotus-explode {
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            animation: explode 2s ease-out forwards;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+                border-radius: 50%;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.8;
+                border-radius: 30%;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+                border-radius: 0%;
+            }
+        }
+        
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: float 2s ease-out forwards;
+        }
+        
+        @keyframes float {
+            to {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="transition-container">
+        <div class="lotus-explode"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+    
+    <script>
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            // Random direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 100 + Math.random() * 500;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.animationDelay = `${Math.random() * 0.5}s`;
+            particle.style.background = `hsl(${Math.random() * 360}, 100%, 65%)`;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Redirect to React app after animation
+        setTimeout(() => {
+            window.location.href = '/'; // Goes to your React app
+        }, 2000);
+    </script>
+</body>
+</html>

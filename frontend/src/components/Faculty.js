@@ -29,7 +29,7 @@ const Faculty = () => {
     <section className="section faculty-section" id="faculty">
       <div className="container">
         <div className="section-title">
-          <h2>Our Faculty</h2>
+          <h2>Our Felicitators</h2>
           <p>Learn from world-renowned professors and researchers</p>
         </div>
         
